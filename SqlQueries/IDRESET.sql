@@ -1,0 +1,2 @@
+DBCC CHECKIDENT ('[TestTable]', RESEED, 0);
+GO
