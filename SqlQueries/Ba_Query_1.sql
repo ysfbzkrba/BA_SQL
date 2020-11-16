@@ -229,7 +229,21 @@ DELETE
 
 DELETE
 	FROM Calisanlar
-		WHERE TitleOfCourtesy='ms.' or Country = 'USA'; -- YADA
+		WHERE TitleOfCourtesy='ms.' or Country = 'USA' -- YADA
+		;
+UPDATE FiyatGüncelleme
+	SET Rate = 105/100
+;
 
+SELECT
+	*
+	INTO FiyatGüncelleme2
+	FROM FiyatGüncelleme
+	GO
+UPDATE FiyatGüncelleme2
+	SET Rate=1, OldPrice=NewPrice, NewPrice=NewPrice*Rate
+	GO
+DROP
+	TABLE FiyatGüncelleme2;
 
 -- BilgeAdam Beşiktaş 11/11/2020 SQL-Query 1  --
