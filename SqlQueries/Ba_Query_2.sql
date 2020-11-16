@@ -326,7 +326,7 @@ SELECT
 			and
 			  FirstName < 'r%'
 			  ORDER BY FirstName		; -- example study :: select for starting with j or r // using:: % search
-	
+;	
 
 
 
@@ -363,7 +363,7 @@ SELECT
 			  FirstName like 'AA%'
 			or
 			  FirstName like 'AN%'
-			  ORDER BY FirstName		; -- DOESN'T WORK // 'LIKE' with many searches at once.
+			  ORDER BY FirstName		; -- SOLUTION 3	// STUDY 1-- Names start with LA, LN, AA or AN	//	LIKE
 
 
 
