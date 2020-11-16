@@ -192,9 +192,9 @@ DECLARE @tags nvarchar(150) = 'clothing,road, ,,touring,bike';
 				;
 
 SELECT
-	ProductID, ProductName 
-	FROM Products
-		WHERE ProductName cross apply string_split(ProductName, ' ')
+	ProductID, ProductName, value
+	FROM Products cross apply string_split(ProductName, ' ')
+		WHERE ProductID = 4
 			ORDER BY ProductID
 
 
