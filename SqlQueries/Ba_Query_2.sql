@@ -340,10 +340,30 @@ SELECT
 				or
 			  SUBSTRING(FirstName, 1, 2) = 'AA'
 				or
-			  SUBSTRING(FirstName, 1, 2) = 'AN'	 	; -- SOLUTION // STUDY 1-- Names start with LA, LN, AA or AN 
+			  SUBSTRING(FirstName, 1, 2) = 'AN'	 	; -- SOLUTION 1	// STUDY 1-- Names start with LA, LN, AA or AN	// SUBSTRING
 
+SELECT
+	FirstName, LastName
+	FROM Employees
+		WHERE LEFT(FirstName, 2) = 'LA'
+				or
+			  LEFT(FirstName, 2) = 'LN'
+				or
+			  LEFT(FirstName, 2) = 'AA'
+				or
+			  LEFT(FirstName, 2) = 'AN'		; -- SOLUTION 2	// STUDY 1-- Names start with LA, LN, AA or AN	//	LEFT
 
-
+SELECT
+	FirstName, LastName
+	FROM Employees
+		WHERE FirstName like 'LA%'
+			or
+			  FirstName like 'LN%'
+			or
+			  FirstName like 'AA%'
+			or
+			  FirstName like 'AN%'
+			  ORDER BY FirstName		; -- DOESN'T WORK // 'LIKE' with many searches at once.
 
 
 
