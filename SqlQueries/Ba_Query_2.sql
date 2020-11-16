@@ -365,10 +365,16 @@ SELECT
 			  FirstName like 'AN%'
 			  ORDER BY FirstName		; -- SOLUTION 3	// STUDY 1-- Names start with LA, LN, AA or AN	//	LIKE
 
+SELECT
+	FirstName, LastName
+	FROM Employees
+		WHERE LEFT(FirstName, 2) in ('LA', 'LN', 'AA', 'AN')
+			  ORDER BY FirstName		; -- SOLUTION 4 // 	LIKE(column, int(number of digits)) in ('..%', ..)
 
-
-
-
-
+SELECT
+	FirstName, LastName
+	FROM Employees
+		WHERE FirstName like '[LA][AN]%'
+			  ORDER BY FirstName		; -- !!!	*SOLUTION 5*	//	LIKE '[LA][AN]%' // Cartesian Operation	!!!!
 
 
