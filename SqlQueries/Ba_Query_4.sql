@@ -112,11 +112,15 @@ SELECT MIN(EmployeeID) FROM Employees; -- minimum numerical value
 
 SELECT MIN(FirstName) FROM Employees; -- first alphabetical order
 
+/*
+--
+--
+	--========--	VIEWS	--========-- 
+;
+	--not tables those are just views.
 
---
---
 ;		--	 exercise	--
-		--	 What order, which employee, to whom, what category, what product, unit price, order price, quantity --
+;		--	 What order, which employee, to whom, what category, what product, unit price, order price, quantity --
 SELECT
 
 	o.OrderID,
@@ -142,15 +146,91 @@ SELECT
 			--HandWritten
 
 
-SELECT   
+SELECT
 	dbo.[Order Details].OrderID, dbo.Employees.FirstName, dbo.Employees.LastName, dbo.Customers.CompanyName, dbo.Customers.ContactName, dbo.[Order Details].ProductID, dbo.Products.ProductName, dbo.Categories.CategoryName, dbo.Categories.Description, dbo.Products.UnitPrice, dbo.[Order Details].UnitPrice AS OrderPrice, dbo.[Order Details].Quantity 
 	FROM dbo.Orders INNER JOIN dbo.Customers ON dbo.Orders.CustomerID = dbo.Customers.CustomerID INNER JOIN
                          dbo.Employees ON dbo.Orders.EmployeeID = dbo.Employees.EmployeeID INNER JOIN
                          dbo.[Order Details] ON dbo.Orders.OrderID = dbo.[Order Details].OrderID INNER JOIN
                          dbo.Products ON dbo.[Order Details].ProductID = dbo.Products.ProductID INNER JOIN
                          dbo.Categories ON dbo.Products.CategoryID = dbo.Categories.CategoryID
-		ORDER BY dbo.[Order Details].OrderID, dbo.Employees.FirstName
+		ORDER BY dbo.[Order Details].OrderID, dbo.Employees.FirstName;			-- from  Views // New View -- 
 
-			-- from  Views // New View -- 
+SELECT * FROM [dbo].[SatisRapor]; -- drag and drop from views
+
+
 ;		--	 exercise	--
+;
+
+
+;				-- EKSİK --
+	--========--	CREATE // ALTER // DELETE	--========-- 
+;
+
+
+CREATE VIEW Fiyatlar AS
+	SELECT ProductID, ProductName, UnitPrice
+		FROM Products
+/*
+ALTER VIEW Fiyatlar AS
+	SELECT ProductID, ProductName, UnitPrice
+		FROM Products
+		 WHERE
+*/
+CREATE VIEW [PahaliUrunler] AS
+	SELECT ProductName, UnitPrice
+		FROM Products
+			WHERE UnitPrice > (SELECT AVG(UnitPrice) FROM Products);
+
+select * [dbo].[PahaliUrunler]
+
+ALTER VIEW [PahaliUrunler] AS -- not sure about alter view
+	with encryption
+		SELECT ProductName, UnitPrice -- not sure about alter view
+			FROM Products
+				WHERE UnitPrice > (SELECT AVG(UnitPrice) FROM Products); -- not sure about alter view
+
+;				-- EKSİK --
+
+*/
+	--========--	CASE WHEN THEN	--========-- 
+	
+	-- (case (column) when 'value' then 'new value' end) as 'output column name'
+
+SELECT 
+	FirstName,
+	LastName,
+	Title,
+	(CASE(Country)
+	WHEN 'UK' THEN 'United Kingdom'
+	WHEN 'USA' THEN 'United States of America'
+	ELSE Country
+	END) AS 'Country' 
+FROM Employees
+
+SELECT 
+	EmployeeID,
+	FirstName,
+	LastName,
+	Title,
+		(CASE
+		WHEN EmployeeID>5
+			THEN 'Bigger than 5'
+		WHEN EmployeeID<5
+			THEN 'Smaller than 5'
+		ELSE 'Equals 5'
+		END)	AS 'Status'
+	FROM Employees
+
+
+	--========--	SUBQUERIES	--========-- 	
+;	-- 
+
+SELECT 
+	ProductID, ProductName, UnitPrice, UnitsInStock, 
+		(SELECT CategoryName FROM Categories WHERE CategoryID=Products.CategoryID) AS Supplier
+	FROM Products
+	ORDER BY ProductName ASC, Supplier DESC
+
+;
+	--========--	GROUP BY / STORED PROCEDURE / FUNCTION	--========-- 	
 
