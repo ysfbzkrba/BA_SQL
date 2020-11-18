@@ -22,3 +22,4 @@ DECLARE @query	nvarchar(max) =
 			 ;
 			 print @query
 
+
