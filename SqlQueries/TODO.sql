@@ -31,3 +31,10 @@ sorgu çalıştığında çıktı bu formatta olacak.
 eğer kullanıcı eksik numara girerse hata mesajı veriniz.
 https://www.mssqltips.com/sqlservertip/6509/sql-server-substring/
 */
+
+
+
+
+-- Group By TODO
+-- 1) Toplam tutarı 2500 ile 3500 arası olan siparişler
+-- 2) Her bir siparişteki toplam ürün sayısı 200den az olanlar
