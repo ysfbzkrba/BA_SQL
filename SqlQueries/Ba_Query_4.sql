@@ -112,7 +112,7 @@ SELECT MIN(EmployeeID) FROM Employees; -- minimum numerical value
 
 SELECT MIN(FirstName) FROM Employees; -- first alphabetical order
 
-/*
+
 --
 --
 	--========--	VIEWS	--========-- 
@@ -158,40 +158,101 @@ SELECT
 SELECT * FROM [dbo].[SatisRapor]; -- drag and drop from views
 
 
-;		--	 exercise	--
-;
-
 
 ;				-- EKSİK --
 	--========--	CREATE // ALTER // DELETE	--========-- 
 ;
 
+CREATE VIEW KategoriListesi AS
+		SELECT 
+			*
+			FROM Categories;	-- Creates a view named KategoriListesi from Categories.
 
-CREATE VIEW Fiyatlar AS
-	SELECT ProductID, ProductName, UnitPrice
-		FROM Products
-/*
-ALTER VIEW Fiyatlar AS
-	SELECT ProductID, ProductName, UnitPrice
-		FROM Products
-		 WHERE
-*/
-CREATE VIEW [PahaliUrunler] AS
-	SELECT ProductName, UnitPrice
-		FROM Products
-			WHERE UnitPrice > (SELECT AVG(UnitPrice) FROM Products);
+SELECT 
+	*
+	FROM KategoriListesi;	-- Selects all values in view KategoriListesi.
 
-select * [dbo].[PahaliUrunler]
 
-ALTER VIEW [PahaliUrunler] AS -- not sure about alter view
-	with encryption
-		SELECT ProductName, UnitPrice -- not sure about alter view
-			FROM Products
-				WHERE UnitPrice > (SELECT AVG(UnitPrice) FROM Products); -- not sure about alter view
+ALTER VIEW KategoriListesi AS
+     SELECT 
+		CategoryID , Description
+		FROM Categories; -- Alters View 'KategoriListesi' to contain CategoryID, Description.
 
-;				-- EKSİK --
+-- View üzerinden tüm CRUD işlemlerini yapabilirsiniz
+-- NOT : view içerisinde yer alan tablonun kuralları geçerlidir.
 
-*/
+DELETE FROM 
+	KategoriListesi
+		WHERE CategoryID > 8;	-- deletes categoryID > 8 from kategorilistesi
+
+SELECT 
+	*
+	FROM KategoriListesi;	-- select kategorilistesi
+
+INSERT INTO 
+	KategoriListesi (Description) 
+		VALUES ( 'Açıklama Alanı' ); -- ERR::Cannot insert the value NULL into column 'CategoryName' 
+ALTER VIEW KategoriListesi AS
+     SELECT 
+		CategoryID , 
+		CategoryName , 
+		Description
+			FROM Categories; -- Alters View 'KategoriListesi' to contain CategoryID, CategoryName, Description.
+INSERT INTO 
+	KategoriListesi
+		VALUES ( 'Kategori Adı' , 'Açıklama' ); -- adds according to columns specified on the upper line
+						-- 'kategori adı' => CategoryName, 'Açıklama' => Description
+
+INSERT INTO 
+	Categories
+		VALUES ( 'Kategori Adı' , 'Açıklama'); -- DoesNotWork // table has 1 more column not addressed here (picture)
+INSERT INTO 
+	Categories
+		VALUES ( 'Kategori Adı' , 'Açıklama', ''); -- WORKS // Column.Picture is addressed by ''. outputs 0x 
+INSERT INTO 
+	Categories ( CategoryName , Description ) 
+VALUES ( 'Kategori Adı' , 'Açıklama'); -- WORKS // wich columns to add value is addressed by (CategoryName, Description)
+SELECT * FROM Categories
+
+
+CREATE VIEW OgrenciListesi AS
+     SELECT 
+		FirstName , LastName , Title , City
+			FROM Employees; -- Creates view from Employees containing "FirstName, LastName, Title, City" named OgrenciListesi
+
+SELECT *
+FROM OgrenciListesi; -- Selects OgrenciListesi
+
+INSERT INTO OgrenciListesi
+		VALUES ( 'Murat' , 'Vuranok' , 'Kaldırım Mühendisi' , 'Ankara'); -- Inserts Murat Vuranok Kaldırım Mühendisi Ankara into Ogrencilistesi
+
+ALTER VIEW OgrenciListesi AS
+     SELECT 
+		FirstName , LastName , Title , City
+			FROM Employees
+				WHERE City = 'Ankara'; -- Alters OgrenciListesi to contain (FirstName, LastName, Title, City) with rule "City=Ankara"
+
+INSERT INTO OgrenciListesi
+	VALUES ( 'Ahmet' , 'Şahin' , 'Kaldırım Mühendisi' , 'İzmir'); -- Inserts Ahmet Şahin Kaldırım Mühendisi İzmir into Ogrencilistesi
+;					
+
+ALTER VIEW OgrenciListesi AS
+     SELECT 
+		FirstName , LastName , Title , City
+		FROM Employees
+			WHERE City = 'Ankara'
+				WITH CHECK OPTION; -- Alters OgrenciListesi to contain (FirstName, LastName, Title, City) with rule "City=Ankara" 
+				-- DOES NOT WORK because we set the rule City=Ankara WITH Check Option
+
+-- encyrption => view'ı şifreleme 
+
+ALTER VIEW OgrenciListesi WITH ENCRYPTION AS
+     SELECT FirstName , LastName , Title , City
+		FROM Employees
+			WHERE City = 'Ankara'
+				WITH CHECK OPTION;	-- Encrypts OgrenciListesi so it is safer
+
+
 	--========--	CASE WHEN THEN	--========-- 
 	
 	-- (case (column) when 'value' then 'new value' end) as 'output column name'
