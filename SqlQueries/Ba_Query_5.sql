@@ -204,10 +204,32 @@ Drop proc proc_Addtomusteri -- drops proc from db
 DROP TABLE Customers2		-- drops table from db
 */
 
+;
+	--========--	FUNCTIONS // USER DEFINED FUNCTIONS	--========--
+;
+
+-- SCALER FUNCTIONS -- 
+
+SELECT ProductID, ProductName, UnitPrice as 'KDV DAHİL DEĞİL', UnitPrice*1.18 as 'KDV DAHİL' FROM Products 
+
+
+CREATE FUNCTION KDVHesapla (@price MONEY)
+	returns money
+		begin	-- { function starts
+				-- Function Body
+			return @price*1.18;
+		end		-- } function ends
+		;	-- creates function to calculate KDV
+
+SELECT ProductID, ProductName, UnitPrice as 'KDV DAHİL DEĞİL', dbo.KDVHesapla(UnitPrice) as 'KDV DAHİL' FROM Products 
 
 
 
-SELECT 
-	CONCAT('@', c.name), ' ', t.name , '(', (C.max_length /2), ')'
-		FROM (sys.columns AS c join sys.types AS t ON c.user_type_id=t.user_type_id)  
-			WHERE c.object_id=OBJECT_ID('dbo.'+'Customers2');
+CREATE FUNCTION FormatPhone (@PHONE NVARCHAR(24))
+	RETURNS NVARCHAR(24)
+		BEGIN
+
+		DECLARE @telefon nVarChar(24)
+
+		RETURN @telefon
+		END
