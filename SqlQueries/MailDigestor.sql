@@ -1,4 +1,4 @@
-﻿/*
+/*
 			MAIL ADDRESS DISECTOR
 */
 
@@ -25,4 +25,7 @@ DECLARE	@Mail	nVarChar(100)	=	'yusuf.bozkir@hotmail.com' ;
 						@Lname as LastName, 
 						@domain as Domain, 
 						@Extention as extention; 
-
+/*
+			MAIL ADDRESS DISECTOR
+			OUT
+*/
