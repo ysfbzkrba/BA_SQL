@@ -159,8 +159,7 @@ SELECT * FROM [dbo].[SatisRapor]; -- drag and drop from views
 
 
 
-;				-- EKSİK --
-	--========--	CREATE // ALTER // DELETE	--========-- 
+;	--========--	CREATE // ALTER // DELETE	--========-- 
 ;
 
 CREATE VIEW KategoriListesi AS
@@ -244,7 +243,6 @@ ALTER VIEW OgrenciListesi AS
 				WITH CHECK OPTION; -- Alters OgrenciListesi to contain (FirstName, LastName, Title, City) with rule "City=Ankara" 
 				-- DOES NOT WORK because we set the rule City=Ankara WITH Check Option
 
--- encyrption => view'ı şifreleme 
 
 ALTER VIEW OgrenciListesi WITH ENCRYPTION AS
      SELECT FirstName , LastName , Title , City
